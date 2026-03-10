@@ -23,10 +23,10 @@ class Controladores:
     def anguloGiro(self):
            
            #    comparacion de la velocidad del viento, para obtener la velocidad angular 
-        if self.velocidadViento >= 25 and self.velocidadViento <= 85:
+        if self.velocidadViento >= 25 and self.velocidadViento <= 100:
             self.angulo = op.velocidadAngular(self.velocidadViento)
             
-        if(self.velocidadViento >= 0 and self.velocidadViento <25) or self.velocidadViento > 85 :
+        if(self.velocidadViento >= 0 and self.velocidadViento <25) or self.velocidadViento > 100 :
             
             if self.angulo > 0:
                 freno = round(float(self.angulo*0.05),2)

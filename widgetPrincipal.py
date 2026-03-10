@@ -20,7 +20,7 @@ class ProgramPrincipal:
         self.canvas.place(relx=0.5,rely=0.5, anchor="center", relwidth=0.75, relheight=1)
         
         self.imgfondo = Image.open("img/fondo.png").resize((942,1064))
-        self.imgTorre = Image.open("img/torreVertical.png").resize((1042,1364))
+        self.imgTorre = Image.open("img/torreVertical.png").resize((1342,1364))
         self.imgAspas = Image.open("img/aspasVertical.png").resize((621,932)) #   inicialisar imagen y tamaño
         
         self.giro = 0   #   angulo de giro
@@ -63,7 +63,7 @@ class ProgramPrincipal:
         self.viento = ttk.Label(self.frame, text="V(viento): 0 km/h")
         self.viento.place(relx=0.02, rely=0.1) #posicion x & y en porcentaje
         
-        self.variableAire = ttk.Scale(self.frame, from_=0, to=90, orient="horizontal", 
+        self.variableAire = ttk.Scale(self.frame, from_=0, to=120, orient="horizontal", 
                                        command= lambda valor: control.mostrarScalar("km/h",self.viento, valor))
         self.variableAire.place(relx=0.02, rely=0.2)
         
