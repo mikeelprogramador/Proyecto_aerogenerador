@@ -16,12 +16,14 @@ class ProgramPrincipal:
 
         
     def __lienso(self):
-        self.canvas = Canvas(self.ventana, width=360, bg="blue")
+        #   creando en lienso o canvas
+        self.canvas = Canvas(self.ventana, width=360)
         self.canvas.place(relx=0.5,rely=0.5, anchor="center", relwidth=0.75, relheight=1)
         
+        #   inicialisar imagen y tamaño
         self.imgfondo = Image.open("img/fondo.png").resize((942,1064))
         self.imgTorre = Image.open("img/torreVertical.png").resize((1342,1364))
-        self.imgAspas = Image.open("img/aspasVertical.png").resize((621,932)) #   inicialisar imagen y tamaño
+        self.imgAspas = Image.open("img/aspasVertical.png").resize((621,932))
         
         self.giro = 0   #   angulo de giro
         
@@ -57,6 +59,7 @@ class ProgramPrincipal:
         #print(self.giro)   #   el numero de giro por los milisegundos
         
         self.canvas.after(ms, self.rotar)   #   Ejecucion de la funcion por los milisegundos
+        
         
     def __variablesPrograma(self):
         
