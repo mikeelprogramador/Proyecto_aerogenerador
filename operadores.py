@@ -36,5 +36,6 @@ class Operations:
     def PotenciaElectrica():
         pass # Pendiente hacer esta funcion 
     
-    def EneriaTotal():
+    def EnergiaTotal():
+
         pass # Pendiente hacer esta funcion 
