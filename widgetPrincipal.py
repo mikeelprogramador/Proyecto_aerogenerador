@@ -1,8 +1,9 @@
 from tkinter import *
 from tkinter import ttk
-from PIL import Image
-from controles import Operadores
+from PIL import Image,ImageTk
+from controles import Controladores
 
+control = Controladores()
 
 class ProgramPrincipal:
     def __init__(self):
@@ -16,28 +17,68 @@ class ProgramPrincipal:
         
     def __lienso(self):
         self.canvas = Canvas(self.ventana, width=360, bg="blue")
-        self.canvas.place(relx=0.5,rely=0.5, anchor="center", relwidth=0.75, relheight=1) 
+        self.canvas.place(relx=0.5,rely=0.5, anchor="center", relwidth=0.75, relheight=1)
         
-        #lienso
-        """"Eesta metodo se colocaran las imagen del aerogenerador, y se cambiara el fondo, tambien se dara la animacion de rotacion"""
+        self.imgfondo = Image.open("img/fondo.png").resize((942,1064))
+        self.imgTorre = Image.open("img/torreVertical.png").resize((1042,1364))
+        self.imgAspas = Image.open("img/aspasVertical.png").resize((621,932)) #   inicialisar imagen y tamaño
+        
+        self.giro = 0   #   angulo de giro
+        
+        #   cargar la imagne a Tk
+        self.imgTk_fondo = ImageTk.PhotoImage(self.imgfondo)
+        self.imgTk_torre = ImageTk.PhotoImage(self.imgTorre)
+        self.imgTk_aspas = ImageTk.PhotoImage(self.imgAspas)
+ 
+        #   mostrar la imagen una sola vez en canvas 
+        self.img_id_fondo = self.canvas.create_image(450, 500, image=self.imgTk_fondo, anchor="center")
+        self.img_id_torre = self.canvas.create_image(500, 500, image=self.imgTk_torre)
+        self.img_id_aspas = self.canvas.create_image(498, 260, image=self.imgTk_aspas, anchor="center")       
+
+        self.rotar()
+        
+
+        
+    def rotar(self):
+        ms = 16 #   milisegundos
+        
+        velocidadAngular = control.anguloGiro()
+        
+        dt = ms / 1000  #   Tiempo entre frame
+        
+        self.giro += velocidadAngular * dt
+        
+        rotacionImg = self.imgAspas.rotate(self.giro, expand=TRUE)  #   rotacion de la imagen
+        self.imgTk_aspas = ImageTk.PhotoImage(rotacionImg)    #   
+        
+        #Actualizar imagen
+        self.canvas.itemconfig(self.img_id_aspas, image=self.imgTk_aspas)
+        
+        #print(self.giro)   #   el numero de giro por los milisegundos
+        
+        self.canvas.after(ms, self.rotar)   #   Ejecucion de la funcion por los milisegundos
         
     def __variablesPrograma(self):
         
         self.viento = ttk.Label(self.frame, text="V(viento): 0 km/h")
         self.viento.place(relx=0.02, rely=0.1) #posicion x & y en porcentaje
+        
         self.variableAire = ttk.Scale(self.frame, from_=0, to=90, orient="horizontal", 
-                                       command= lambda valor: Operadores.mostrarScalar("km/h",self.viento, valor))
+                                       command= lambda valor: control.mostrarScalar("km/h",self.viento, valor))
         self.variableAire.place(relx=0.02, rely=0.2)
         
         self.temperatura = ttk.Label(self.frame,text="Temperatura: 0°")
         self.temperatura.place(relx=0.02, rely=0.4)
+        
         self.variableTemperatura = ttk.Scale(self.frame, from_=-20,to=100, orient="vertical", 
-                                             command= lambda valor: Operadores.mostrarScalar("°",self.temperatura,valor))
+                                             command= lambda valor: control.mostrarScalar("°",self.temperatura,valor))
         self.variableTemperatura.place(relx=0.05, rely=0.5)
         
         ttk.Label(self.frame, text="Direccion del viento").place(relx=0.02, rely=0.7)
+        
         self.izquierda = ttk.Button(self.frame, text="Izquierda")
         self.izquierda.place(relx=0.035, rely=0.75)
+        
         self.derecha = ttk.Button(self.frame, text="derecha")
         self.derecha.place(relx=0.035, rely=0.8)
         
