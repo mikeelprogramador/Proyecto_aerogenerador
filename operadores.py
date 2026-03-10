@@ -37,5 +37,4 @@ class Operations:
         pass # Pendiente hacer esta funcion 
     
     def EnergiaTotal():
-
         pass # Pendiente hacer esta funcion 

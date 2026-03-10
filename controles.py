@@ -29,7 +29,7 @@ class Controladores:
         if(self.velocidadViento >= 0 and self.velocidadViento <25) or self.velocidadViento > 100 :
             
             if self.angulo > 0:
-                freno = round(float(self.angulo*0.05),2)
+                freno = self.angulo*0.01
                 self.angulo -= freno
                 
             if self.angulo < 1:
