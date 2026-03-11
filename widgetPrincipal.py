@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import ttk
 from PIL import Image,ImageTk
+import threading as hilo
 from controles import Controladores
 
 control = Controladores()
@@ -35,13 +36,19 @@ class ProgramPrincipal:
         #   mostrar la imagen una sola vez en canvas 
         self.img_id_fondo = self.canvas.create_image(450, 500, image=self.imgTk_fondo, anchor="center")
         self.img_id_torre = self.canvas.create_image(500, 500, image=self.imgTk_torre)
-        self.img_id_aspas = self.canvas.create_image(498, 260, image=self.imgTk_aspas, anchor="center")       
-
-        self.rotar()
+        self.img_id_aspas = self.canvas.create_image(498, 260, image=self.imgTk_aspas, anchor="center") 
+        
+             
+        #   Movimiento de la turbina
+        self.__programa()
+        
+        #    calcular la electricidad todal en otro hilo o otra tarea
+        calculo_electricidad = hilo.Thread(target=control.electricidad, daemon=True)
+        calculo_electricidad.start()
         
 
         
-    def rotar(self):
+    def __programa(self):
         ms = 16 #   milisegundos
         
         velocidadAngular = control.anguloGiro()
@@ -58,7 +65,7 @@ class ProgramPrincipal:
         
         #print(self.giro)   #   el numero de giro por los milisegundos
         
-        self.canvas.after(ms, self.rotar)   #   Ejecucion de la funcion por los milisegundos
+        self.canvas.after(ms, self.__programa)   #   Ejecucion de la funcion por los milisegundos
         
         
     def __variablesPrograma(self):
