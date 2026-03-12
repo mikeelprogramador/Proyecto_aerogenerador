@@ -53,9 +53,11 @@ class Controladores:
         #print("Velocidad angular:",self.angulo)    #   Velocidad angular por milisegundos 
             
         return self.angulo
+    
+    
 
     def electricidad(self,etiqueta_canvas = None, etiqueta = None):
-        tiempoInical = time.perf_counter()  #   tiempo incial 
+        # tiempoInical = time.perf_counter()  #   tiempo incial 
         
         while True:
             
@@ -82,11 +84,15 @@ class Controladores:
                     if self.energia_total < 0.1:
                         self.energia_total = 0
                         
+                        
             else:
                 self.energia_total -= (self.energia_total * 0.1) 
                 if self.energia_total < 0.1:
                     self.energia_total = 0
                     
+                    
+            if self.energia_total == 0:
+                tiempoInical = time.perf_counter()  #   tiempo incial
 
             if etiqueta_canvas != None:
                 etiqueta_canvas.itemconfig(etiqueta, text=f"Energia generada: {round(float(self.energia_total),2)} kwh")
@@ -95,10 +101,6 @@ class Controladores:
                 
     def cambio_direccion(self, direccion):
         self.__Dv = direccion
-        
-        if direccion == "e":
-            pass
-            
         
         
                 
@@ -124,5 +126,80 @@ class Controladores:
                 etiqueta_canvas.itemconfig(etiqueta, fill="white")
        
                 
-    def movimiento_aire(self, etiqueta_canvas, etiqueta ):
-        etiqueta_canvas.itemconfig(self.img_id_corrienteAire, state="normal")
+                
+                
+    def movimiento_aire(self, etiqueta_canvas, etiqueta_e, etiqueta_w ):
+        
+        velocidad_e = 10
+        velocidad_w = -10
+        
+        while True:
+            
+            #   extraemos la poscion y el estado de la corriente de aire por izquierda
+            x_actual_e, y_actual_e = etiqueta_canvas.coords(etiqueta_e)
+            estado_actual_e = etiqueta_canvas.itemcget(etiqueta_e, "state")
+            
+            #   extraemos la poscion y el estado de la corriente de aire por derecha
+            x_actual_w, y_actual_w = etiqueta_canvas.coords(etiqueta_w)
+            estado_actual_w = etiqueta_canvas.itemcget(etiqueta_w, "state")
+            
+            #   sacando la longitud del viento
+            v = int(self.velocidadViento)
+            v = len(str(v))
+            
+            #   calculando el tiempo segun la velocidad del aire
+            tiempo = int(self.velocidadViento ) / 100**int(v)
+            
+            #   aplicando el tiempo se puede colocar una constante o la variacion del tiempo
+            time.sleep(0.070)
+            
+            #   si la direccion es por la izquierda
+            if self.__Dv == "e":
+                
+                #   comprobar si el estado de la corriente de la derecha esta a la vista
+                if estado_actual_w != "hidden":
+                    etiqueta_canvas.coords(etiqueta_w, 1100, 300)
+                    etiqueta_canvas.itemconfig(etiqueta_w, state="hidden")
+
+                
+                if self.velocidadViento > 0:
+                    
+                    if estado_actual_e != "norma":
+                        etiqueta_canvas.itemconfig(etiqueta_e, state="normal")
+                       
+                    #   movemos la imagen de izquerda a derecha  
+                    etiqueta_canvas.move(etiqueta_e, velocidad_e, 0)
+                    
+                if x_actual_e > 1100 or self.velocidadViento < 1:
+                    
+                    if estado_actual_e != "hidden":
+                        etiqueta_canvas.coords(etiqueta_e, 0, 300)
+                        etiqueta_canvas.itemconfig(etiqueta_e, state="hidden")
+                                
+            else:
+                
+                #   comprobar si el estado de la corriente de la izquiera esta a la vista
+                if estado_actual_e != "hidden":
+                    etiqueta_canvas.coords(etiqueta_e, 0, 300)
+                    etiqueta_canvas.itemconfig(etiqueta_e, state="hidden")
+                
+                
+                if self.velocidadViento > 0:
+                    if estado_actual_w != "normal":
+                        etiqueta_canvas.itemconfig(etiqueta_w, state="normal")
+                    
+                #   movemos la imagen de derecha a izquiera 
+                etiqueta_canvas.move(etiqueta_w, velocidad_w, 0)
+                
+                if x_actual_w < 0 or self.velocidadViento < 1:
+                    
+                    if estado_actual_w != "hidden":
+                        etiqueta_canvas.coords(etiqueta_w, 1100, 300)
+                        etiqueta_canvas.itemconfig(etiqueta_w, state="hidden")
+                        
+            
+                    
+                
+                    
+             
+                
