@@ -1,5 +1,4 @@
-from widgetPrincipal import ProgramPrincipal
+from view.section_controles import window_padre
 
 if __name__ == "__main__":
-    app = ProgramPrincipal()
-    app.EjecucionPorgrama()
+    window_padre()
