@@ -2,8 +2,8 @@ def window_padre():
     """_resumen_
     Método que instancia y ejecuta la matriz padre
     """
-    from .matriz_padre.widget_aero_vertical import Programa_aero_vertical
-    matriz_padre = Programa_aero_vertical()
+    from .matriz_padre.widget_aero_horizonal import Programa_aero_horizontal
+    matriz_padre = Programa_aero_horizontal()
     matriz_padre.ejecucionPorgrama()
     
 state_window = False
@@ -15,16 +15,16 @@ def window_hijas(flag, matrizPadre):
       
     global state_window 
 
-    #   ventana hija para el aerogenerado horizontal
-    if flag == "horizontal":
-        from .matriz_hijas.widget_aero_horizontal import Programa_aero_horizontal
+    #   ventana hija para el aerogenerado vertical
+    if flag == "vertical":
+        from .matriz_hijas.widget_aero_vertical import Programa_aero_vertical
         
         #  termina la ejecucion el metodo si la ventana esta abierta
         if state_window:
             return
         
         state_window = True
-        matriz_hija = Programa_aero_horizontal(matrizPadre)
+        matriz_hija = Programa_aero_vertical(matrizPadre)
         ventana_hija = matriz_hija.ventana   #   se guarda la matriz hija en un variable 
         
         #//////////////////////////

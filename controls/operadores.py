@@ -43,10 +43,9 @@ class Operations:
         
         velocidadEnAngulo = round(float((self.__Vp * VelocidadV )/ self.__radio ),2)
         
-        velocidadRadianes = velocidadEnAngulo * ( 180 / np.pi ) #   Velocidad angular en radianes
-        rpm = (velocidadRadianes * 60 ) / 360
+        velocidadRadianes = np.radians(velocidadEnAngulo)
         
-        return rpm
+        return velocidadRadianes
     
     
     def PotenciaElectrica(self,potencia_turbina):

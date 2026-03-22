@@ -1,5 +1,6 @@
 from controls.operadores import Operations
 import time
+import numpy as np
 
 op = Operations() # instancia de las operacione
 
@@ -34,7 +35,8 @@ class Controladores:
         if self.__Dv == "e":
             #    comparacion de la velocidad del viento, para obtener la velocidad angular 
             if self.velocidadViento >= 25 and self.velocidadViento <= 100:
-                self.angulo = op.velocidadAngular(self.velocidadViento)
+                rpm = (op.velocidadAngular(self.velocidadViento) * 60) / (2 * np.pi)
+                self.angulo = rpm * 50
                 
             #   reduce elangulo de giro segun la velocidad del viento
             elif (self.velocidadViento >= 0 and self.velocidadViento <25) or self.velocidadViento > 100 :
