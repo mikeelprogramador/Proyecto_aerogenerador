@@ -1,9 +1,11 @@
 from tkinter import *
 from tkinter import ttk
 from PIL import Image,ImageTk
-from controls.aniamciones import Controladores
+from controls.aniamciones import Animations
+from controls.animacion_verical import anguloGiro, velocidades
 
-control = Controladores()
+control = Animations()
+control.velocidades_motor(velocidades())
 
 class Programa_aero_vertical:
     def __init__(self, matrizPadre):
@@ -81,7 +83,7 @@ class Programa_aero_vertical:
         #   milisegundos
         ms = 33 
         
-        velocidadAngular = control.anguloGiro()
+        velocidadAngular = anguloGiro(control.direction_viento(), control.velocidadViento)
 
         #   tiempo entre frame
         dt = ms / 1000  

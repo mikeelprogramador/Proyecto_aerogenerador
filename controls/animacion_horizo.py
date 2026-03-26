@@ -43,6 +43,6 @@ def anguloGiro(direction_viento, speed_viento):
 
 #   velocidades para los motores
 def velocidades():
-    velocidad_maxima = 90
-    velocidad_minima = 40
+    velocidad_maxima = 100
+    velocidad_minima = 25
     return velocidad_maxima, velocidad_minima

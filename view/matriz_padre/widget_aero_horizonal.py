@@ -1,10 +1,12 @@
 from tkinter import *
 from tkinter import ttk
 from PIL import Image,ImageTk
-from controls.aniamciones import Controladores
+from controls.aniamciones import Animations
+from controls.animacion_horizo import anguloGiro, velocidades
 from view.section_controles import window_hijas
 
-control = Controladores()
+control = Animations()
+control.velocidades_motor(velocidades())
 
 class Programa_aero_horizontal:
     def __init__(self):
@@ -15,6 +17,7 @@ class Programa_aero_horizontal:
         self.__variablesPrograma()
         self.giro = 0   #   angulo de giro
         self.__lienso()
+        
 
         
     def __lienso(self):
@@ -82,7 +85,7 @@ class Programa_aero_horizontal:
         #   milisegundos
         ms = 33 
         
-        velocidadAngular = control.anguloGiro()
+        velocidadAngular = anguloGiro(control.direction_viento(), control.velocidadViento)
 
         #   tiempo entre frame
         dt = ms / 1000  
@@ -157,10 +160,6 @@ class Programa_aero_horizontal:
         self.boton2 = ttk.Button(self.frame, text="Aerogenerador \n Vibraciones",
                                  command= lambda: window_hijas("ondas", self.ventana))
         self.boton2.place(relx=0.9, rely=0.3)
-        
-        #   boton   
-        self.boton3 = ttk.Button(self.frame, text="Boton3")
-        self.boton3.place(relx=0.9, rely=0.5)
         
         
     def __styleVentana(self):

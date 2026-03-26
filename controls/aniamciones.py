@@ -1,19 +1,18 @@
 from controls.operadores import Operations
 import time
-import numpy as np
 
 op = Operations() # instancia de las operacione
 
 
-class Controladores:
+class Animations:
     
     def __init__(self):
         self.__Dv = "e" #  Direccion del viento
         self.velocidadViento = 0 #  variable predeterminada del viento
         self.temperatura = 0    #  variable predeterminada de la temperatura
         self.energia_total = 0    #  variable predeterminada de la energia total
-        self.estado_color = ""  #   vaable para cambiar el fondo
-        self.angulo = 0 #  variable predeterminada de la velocidad gular
+        self.estado_color = ""  #   varible para cambiar el fondo
+        self.tiempoInical = 0   
     
     def mostrarScalar(self, flag, etiqueta, valor):
         
@@ -26,50 +25,19 @@ class Controladores:
         elif(flag == "°"):
             self.temperatura = round(float(valor),0)
             etiqueta.configure(text=f"Temperatura: {self.temperatura}°")
-            
-            
-            
-    def anguloGiro(self):
            
-        #   calcula el angulo de giro si la direccion del aire va hacia la izquierda
-        if self.__Dv == "e":
-            #    comparacion de la velocidad del viento, para obtener la velocidad angular 
-            if self.velocidadViento >= 25 and self.velocidadViento <= 100:
-                rpm = (op.velocidadAngular(self.velocidadViento) * 60) / (2 * np.pi)
-                self.angulo = rpm * 50
-                
-            #   reduce elangulo de giro segun la velocidad del viento
-            elif (self.velocidadViento >= 0 and self.velocidadViento <25) or self.velocidadViento > 100 :
-            
-                if self.angulo > 0:
-                    #/////////////////////////////////////////////////
-                    #   reduccion del angulo de giro, para una mejor animacion
-                    #   no tiene como una formula matematica, solo es un aproximado
-                    #////////////////////////////////////////////////
-                    freno = self.angulo * 0.005 
-                    self.angulo -= freno
-                    
-                elif self.angulo < 1:
-                    self.angulo = 0
-                    
-        #   disminuye el angulo de giro si la direccion del aire va hacia la derecha
-        else:
-            #/////////////////////////////////////////////////
-            #   reduccion del angulo de giro, para una mejor animacion
-            #   no tiene como una formula matematica, solo es un aproximado
-            #////////////////////////////////////////////////
-            self.angulo -= (self.angulo * 0.005) 
-            if self.angulo < 1:
-                self.angulo = 0
-                    
-            
-        return self.angulo
-    
-    
+           
+                     
+    def velocidades_motor(self,dato):
+        self.velocidad_maxima, self.velocidad_minima = dato    
+      
     #   lectura de la direccion del aire
     def cambio_direccion(self, direccion):
         self.__Dv = direccion
         
+    def direction_viento(self):
+        return self.__Dv
+    
     #   lectura de la ventana en ejecucion
     def get_windows(self, window):
         self.ventana = window
@@ -95,12 +63,12 @@ class Controladores:
         if self.__Dv == "e":
             
             #    comparacion de la velocidad del viento, para obtener la energia total  
-            if self.velocidadViento >= 25 and self.velocidadViento <= 100:
-                #   eenrgia total generada en kwh
+            if self.velocidadViento >= self.velocidad_minima and self.velocidadViento <= self.velocidad_maxima:
+                #   energia total generada en kwh
                 self.energia_total = op.EnergiaTotal(self.tiempoInical,potencia_electrica)
             
             #  disminuye la energia total segun la velocidad del vient
-            elif (self.velocidadViento >= 0 and self.velocidadViento <25) or self.velocidadViento > 100 :
+            elif (self.velocidadViento >= 0 and self.velocidadViento < self.velocidad_minima) or self.velocidadViento > self.velocidad_maxima :
                 
                 if self.energia_total > 0:
                     #/////////////////////////////////////////////////

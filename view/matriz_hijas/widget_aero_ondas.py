@@ -1,9 +1,11 @@
 from tkinter import *
 from tkinter import ttk
 from PIL import Image,ImageTk
-from controls.aniamciones import Controladores
+from controls.aniamciones import Animations
+from controls.animacion_ondas import anguloGiro, velocidades
 
-control = Controladores()
+control = Animations()
+control.velocidades_motor(velocidades())
 
 class Programa_aero_ondas:
     def __init__(self, matrizPadre):
@@ -81,7 +83,10 @@ class Programa_aero_ondas:
         #   milisegundos
         ms = 33 
         
-        velocidadAngular = control.anguloGiro()
+        #////////////////////
+        # LA FUNCION anguloGiro ya no existe se rempazo
+        #///////////////////
+        velocidadAngular = anguloGiro(control.direction_viento(), control.velocidadViento)
 
         #   tiempo entre frame
         dt = ms / 1000  
