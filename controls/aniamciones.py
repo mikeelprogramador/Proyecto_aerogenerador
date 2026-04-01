@@ -23,7 +23,7 @@ class Animations:
         
         #   actura y lectura de valor/Scalar de la temperatura
         elif(flag == "°"):
-            self.temperatura = round(float(valor),0)
+            self.temperatura = round(float(valor), 0)
             etiqueta.configure(text=f"Temperatura: {self.temperatura}°")
            
            

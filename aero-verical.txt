@@ -1,0 +1,35 @@
+from PIL import Image, ImageTk
+import tkinter as tk
+import math
+
+root = tk.Tk()
+
+img = Image.open("aspa.png")  # UNA sola aspa
+
+canvas = tk.Canvas(root, width=500, height=500)
+canvas.pack()
+
+img_id = canvas.create_image(250, 250)
+
+angulo = 0
+
+def animar():
+    global angulo
+    
+    # Simula giro (horizontal)
+	#abs es la posición absoluta
+    escala = abs(math.cos(math.radians(angulo)))
+    
+    nuevo_ancho = int(img.width * escala)
+    img_transformada = img.resize((max(1, nuevo_ancho), img.height))
+    
+    img_tk = ImageTk.PhotoImage(img_transformada)
+    
+    canvas.itemconfig(img_id, image=img_tk)
+    canvas.image = img_tk
+    
+    angulo += 5
+    root.after(30, animar)
+
+animar()
+root.mainloop()

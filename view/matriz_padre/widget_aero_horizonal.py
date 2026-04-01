@@ -28,10 +28,10 @@ class Programa_aero_horizontal:
         
         #   inicialisar imagen y tamaño
         self.imgfondo = Image.open("img/fondo.png").resize((942,1064))
-        self.imgTorre = Image.open("img/torreVertical.png").resize((1342,1364))
+        self.imgTorre = Image.open("img/torre_horizontal.png").resize((1342,1364))
         self.imgCorrienteAire_e = Image.open("img/corriente-aire-e.png").resize((586,400))
         self.imgCorrienteAire_w = Image.open("img/corriente-aire-w.png").resize((586,400))
-        self.imgAspas = Image.open("img/aspasVertical.png").resize((621,932))
+        self.imgAspas = Image.open("img/aspas_horizontales.png").resize((621,932))
 
         
         #   cargar la imagne con PIL y Tk

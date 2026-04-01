@@ -12,7 +12,7 @@ def anguloGiro(direction_viento, speed_viento):
         #    comparacion de la velocidad del viento, para obtener la velocidad angular 
         if speed_viento >= 25 and speed_viento <= 100:
             rpm = (op.velocidadAngular(speed_viento) * 60) / (2 * np.pi)
-            angulo = rpm * 50
+            angulo = rpm * 5
             
         #   reduce elangulo de giro segun la velocidad del viento
         elif (speed_viento >= 0 and speed_viento <25) or speed_viento > 100 :

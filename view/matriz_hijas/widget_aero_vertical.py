@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import ttk
 from PIL import Image,ImageTk
+import numpy as np
 from controls.aniamciones import Animations
 from controls.animacion_verical import anguloGiro, velocidades
 
@@ -26,10 +27,10 @@ class Programa_aero_vertical:
         
         #   inicialisar imagen y tamaño
         self.imgfondo = Image.open("img/fondo.png").resize((942,1064))
-        self.imgTorre = Image.open("img/torreVertical.png").resize((1342,1364))
+        self.imgTorre = Image.open("img/aero_vertical_torre.png").resize((942,1064))
         self.imgCorrienteAire_e = Image.open("img/corriente-aire-e.png").resize((586,400))
         self.imgCorrienteAire_w = Image.open("img/corriente-aire-w.png").resize((586,400))
-        self.imgAspas = Image.open("img/aspasVertical.png").resize((621,932))
+        self.imgAspas = Image.open("img/aero_vertical_aspas.png").resize((500,500))
 
         
         #   cargar la imagne con PIL y Tk
@@ -39,7 +40,7 @@ class Programa_aero_vertical:
         self.imgTk_corrienteAire_w = ImageTk.PhotoImage(self.imgCorrienteAire_w)
         self.imgTk_aspas = ImageTk.PhotoImage(self.imgAspas)
  
-        #   mostrar la imagen una sola vez en canvas 
+        #   mostrar la imagen en el lienso
         self.img_id_fondo = self.canvas.create_image(450, 500, image=self.imgTk_fondo, anchor="center")
         self.img_id_torre = self.canvas.create_image(500, 500, image=self.imgTk_torre)
         self.img_id_corrienteAire_e = self.canvas.create_image(0, 300, image=self.imgTk_corrienteAire_e)
@@ -90,9 +91,20 @@ class Programa_aero_vertical:
         
         self.giro += velocidadAngular * dt
         
+        
         #   rotacion de la imagen
-        rotacionImg = self.imgAspas.rotate(self.giro, expand=TRUE)
-        self.imgTk_aspas = ImageTk.PhotoImage(rotacionImg)
+
+        filtro_giro = self.giro % ( 2 * np.pi)
+        
+        escala = abs(np.cos(filtro_giro))
+        
+        nuevo_ancho = int(self.imgAspas.width * escala )
+        
+    
+        img_transformada = self.imgAspas.resize((max(1, nuevo_ancho), self.imgAspas.height))
+        
+
+        self.imgTk_aspas = ImageTk.PhotoImage(img_transformada)
         
         #   actualizar imagen
         self.canvas.itemconfig(self.img_id_aspas, image=self.imgTk_aspas)
@@ -144,6 +156,10 @@ class Programa_aero_vertical:
         #   lectura de dirracion mediante un boton
         self.derecha = ttk.Button(self.frame, text="derecha", command= lambda: control.cambio_direccion("w"))
         self.derecha.place(relx=0.035, rely=0.8)
+        
+    
+    def reset(self):
+        pass
         
         
     def __styleVentana(self):
