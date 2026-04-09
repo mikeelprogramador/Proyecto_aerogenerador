@@ -26,14 +26,15 @@ class Animations:
             self.temperatura = round(float(valor), 0)
             etiqueta.configure(text=f"Temperatura: {self.temperatura}°")
            
-           
-                     
-    def velocidades_motor(self,dato):
-        self.velocidad_maxima, self.velocidad_minima = dato    
+            
       
     #   lectura de la direccion del aire
-    def cambio_direccion(self, direccion):
+    def cambio_direccion(self, direccion, flag = False):
         self.__Dv = direccion
+        if self.__Dv == "w" and flag :
+            self.activate = True
+        else:
+            self.activate = False
         
     def direction_viento(self):
         return self.__Dv
@@ -48,58 +49,33 @@ class Animations:
     
     
 
-    def electricidad(self, etiqueta):
+    def electricidad(self, etiqueta, flag):
         
         ms = 200
         
-        #   potencia de la turbina, esta puede cambiar segun el veinto o su temperatura; afectando a la potencia electrica
-        potencia_turbina = op.PotenciTurbina(self.velocidadViento,self.temperatura)
-                    
-        #   potencia eletrica segun el intervalo de tiempo inical y el tiempo de espera, con el tiemo final
-        potencia_electrica = op.PotenciaElectrica(potencia_turbina)
+        if flag == "horizontal":
+            from controls.animacion_horizo import electricidad_horizontal
+            self.energia_total = electricidad_horizontal(self.energia_total, self.velocidadViento, self.temperatura, self.__Dv, self.tiempoInical)
+            salida = round(float(self.energia_total),2)
+         
+        if flag == "vertical": 
+            from controls.animacion_verical import electricidad_vertical
+            self.energia_total = electricidad_vertical(self.energia_total, self.velocidadViento, self.temperatura, self.tiempoInical)
+            salida = round(float(self.energia_total),2)           
         
-
-        #   calcula la energia total si la direccion del viento va hacia la izquierda
-        if self.__Dv == "e":
-            
-            #    comparacion de la velocidad del viento, para obtener la energia total  
-            if self.velocidadViento >= self.velocidad_minima and self.velocidadViento <= self.velocidad_maxima:
-                #   energia total generada en kwh
-                self.energia_total = op.EnergiaTotal(self.tiempoInical,potencia_electrica)
-            
-            #  disminuye la energia total segun la velocidad del vient
-            elif (self.velocidadViento >= 0 and self.velocidadViento < self.velocidad_minima) or self.velocidadViento > self.velocidad_maxima :
-                
-                if self.energia_total > 0:
-                    #/////////////////////////////////////////////////
-                    #   reduccion de la enerrgia generada, para una mejor animacion
-                    #   no tiene como una formula matematica, solo es un aproximado
-                    #////////////////////////////////////////////////
-                    self.energia_total -= (self.energia_total * 0.03)
-                    
-                elif self.energia_total < 0.1:
-                    self.energia_total = 0
-                    
-        #  disminuye la energia total si la dirrecion del viento va hacia la derecha           
-        else:
-            #/////////////////////////////////////////////////
-            #   reduccion de la enerrgia generada, para una mejor animacion
-            #   no tiene como una formula matematica, solo es un aproximado
-            #////////////////////////////////////////////////
-            self.energia_total -= (self.energia_total * 0.03) 
-            
-            if self.energia_total < 0.1:
-                self.energia_total = 0
+        if flag == "ondas":
+            from controls.animacion_ondas import electricidad_ondas
+            self.energia_total = electricidad_ondas(self.energia_total, self.velocidadViento, self.temperatura, self.tiempoInical) 
+            salida = round(float(self.energia_total),5)
                 
         #   reinica el tiempo inical si la energia es cero  
         if self.energia_total == 0:
             self.tiempoInical = time.perf_counter()  #   tiempo incial
                 
-            
         #   modifica la lectura de la energia total
-        self.canvas.itemconfig(etiqueta, text=f"Energia generada: {round(float(self.energia_total),2)} kwh")
+        self.canvas.itemconfig(etiqueta, text=f"Energia generada: {salida} kwh")
             
-        self.ventana.after(ms, self.electricidad, etiqueta)
+        self.ventana.after(ms, self.electricidad, etiqueta,flag)
                 
        
                 
@@ -189,7 +165,7 @@ class Animations:
                 
                 #   verifica si la animacin esta desactivada
                 if estado_actual_e != "hidden":
-                    self.canvas.coords(etiqueta_e, 0, 300)  #   regresa la animacion a su lugar original
+                    self.canvas.coords(etiqueta_e, -200, 300)  #   regresa la animacion a su lugar original
                     self.canvas.itemconfig(etiqueta_e, state="hidden")  #   desaciva la animacion
                     
         #   animacion del viento si este va hacia la derecha                  
@@ -197,7 +173,7 @@ class Animations:
             
             #   comprueba si la animacion opuesta a la izquierda esta desactivada
             if estado_actual_e != "hidden":
-                self.canvas.coords(etiqueta_e, 0, 300)  #   regresa la animacion a la posicion original
+                self.canvas.coords(etiqueta_e, -200, 300)  #   regresa la animacion a la posicion original
                 self.canvas.itemconfig(etiqueta_e, state="hidden")  #   oculta la animacion
             
             #   animacion del vieto si la velocidad es mayor a cero
@@ -211,7 +187,7 @@ class Animations:
                 self.canvas.move(etiqueta_w, velocidad_w, 0)
             
              #   compruba si la animacion supero su limite maximo o la velocidad del viento es mejor a 1
-            if x_actual_w < 0 or self.velocidadViento < 1:
+            if x_actual_w < -180 or self.velocidadViento < 1:
                 
                 #   verifica si la animacin esta desactivada
                 if estado_actual_w != "hidden":

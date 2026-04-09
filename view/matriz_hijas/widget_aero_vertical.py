@@ -3,10 +3,9 @@ from tkinter import ttk
 from PIL import Image,ImageTk
 import numpy as np
 from controls.aniamciones import Animations
-from controls.animacion_verical import anguloGiro, velocidades
+from controls.animacion_verical import anguloGiro
 
 control = Animations()
-control.velocidades_motor(velocidades())
 
 class Programa_aero_vertical:
     def __init__(self, matrizPadre):
@@ -43,7 +42,7 @@ class Programa_aero_vertical:
         #   mostrar la imagen en el lienso
         self.img_id_fondo = self.canvas.create_image(450, 500, image=self.imgTk_fondo, anchor="center")
         self.img_id_torre = self.canvas.create_image(500, 500, image=self.imgTk_torre)
-        self.img_id_corrienteAire_e = self.canvas.create_image(0, 300, image=self.imgTk_corrienteAire_e)
+        self.img_id_corrienteAire_e = self.canvas.create_image(-200, 300, image=self.imgTk_corrienteAire_e)
         self.img_id_corrienteAire_w = self.canvas.create_image(1100, 300, image=self.imgTk_corrienteAire_w)
         self.img_id_aspas = self.canvas.create_image(498, 260, image=self.imgTk_aspas, anchor="center")
         
@@ -63,7 +62,7 @@ class Programa_aero_vertical:
         """
         
         #    animacion muestra la energia generada
-        control.electricidad(self.text_energia)
+        control.electricidad(self.text_energia, "vertical")
         
         #    animacion cambia de color segun  la energia generada
         control.cambio_color(self.caja_color)
@@ -84,7 +83,7 @@ class Programa_aero_vertical:
         #   milisegundos
         ms = 33 
         
-        velocidadAngular = anguloGiro(control.direction_viento(), control.velocidadViento)
+        velocidadAngular = anguloGiro(control.velocidadViento)
 
         #   tiempo entre frame
         dt = ms / 1000  
@@ -163,7 +162,7 @@ class Programa_aero_vertical:
         
         
     def __styleVentana(self):
-        self.ventana.title("Simulador Aerogerador Vertical")
+        self.ventana.title("Simulador Aerogerador Vertical Darrieus")
         self.ventana.geometry("1200x720")
         self.ventana.resizable(False,False) #   Desabilita el agrandamienro de la pantalla
         control.get_windows(self.ventana)

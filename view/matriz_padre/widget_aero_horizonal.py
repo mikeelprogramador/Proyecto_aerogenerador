@@ -2,11 +2,10 @@ from tkinter import *
 from tkinter import ttk
 from PIL import Image,ImageTk
 from controls.aniamciones import Animations
-from controls.animacion_horizo import anguloGiro, velocidades
+from controls.animacion_horizo import anguloGiro
 from view.section_controles import window_hijas
 
 control = Animations()
-control.velocidades_motor(velocidades())
 
 class Programa_aero_horizontal:
     def __init__(self):
@@ -44,7 +43,7 @@ class Programa_aero_horizontal:
         #   mostrar la imagen una sola vez en canvas 
         self.img_id_fondo = self.canvas.create_image(450, 500, image=self.imgTk_fondo, anchor="center")
         self.img_id_torre = self.canvas.create_image(500, 500, image=self.imgTk_torre)
-        self.img_id_corrienteAire_e = self.canvas.create_image(0, 300, image=self.imgTk_corrienteAire_e)
+        self.img_id_corrienteAire_e = self.canvas.create_image(-200, 300, image=self.imgTk_corrienteAire_e)
         self.img_id_corrienteAire_w = self.canvas.create_image(1100, 300, image=self.imgTk_corrienteAire_w)
         self.img_id_aspas = self.canvas.create_image(498, 260, image=self.imgTk_aspas, anchor="center")
         
@@ -64,7 +63,7 @@ class Programa_aero_horizontal:
         """
         
         #    animacion muestra la energia generada
-        control.electricidad(self.text_energia)
+        control.electricidad(self.text_energia, "horizontal")
         
         #    animacion cambia de color segun  la energia generada
         control.cambio_color(self.caja_color)
@@ -144,7 +143,7 @@ class Programa_aero_horizontal:
         self.izquierda.place(relx=0.035, rely=0.75)
         
         #   lectura de dirracion mediante un boton
-        self.derecha = ttk.Button(self.frame, text="derecha", command= lambda: control.cambio_direccion("w"))
+        self.derecha = ttk.Button(self.frame, text="derecha", command= lambda: control.cambio_direccion("w", True))
         self.derecha.place(relx=0.035, rely=0.8)
         
         
@@ -152,12 +151,12 @@ class Programa_aero_horizontal:
         Botones para mostrar matrices hijas o los diferentes tipos de aerogeneradores 
         """
         #   boton
-        self.boton1 = ttk.Button(self.frame, text="Aerogenerador \n Vertical", 
+        self.boton1 = ttk.Button(self.frame, text="Aerogenerador \n Darrieus vertical", 
                                  command= lambda: window_hijas("vertical", self.ventana))
         self.boton1.place(relx=0.9, rely=0.1)
         
         #   boton
-        self.boton2 = ttk.Button(self.frame, text="Aerogenerador \n Vibraciones",
+        self.boton2 = ttk.Button(self.frame, text="Aerogenerador \n Vortex Bladeless \n sin aspas",
                                  command= lambda: window_hijas("ondas", self.ventana))
         self.boton2.place(relx=0.9, rely=0.3)
         

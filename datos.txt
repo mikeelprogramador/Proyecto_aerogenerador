@@ -3,4 +3,5 @@ velocidad de frenado, algunos aerogeneradores suelen pagar sus tomores cuando el
 la velocidad minima de un aerogeneradores verticales sele ser de 36km/h o 54km/h
 
 
-Los erogeneradores por ondas
+Los erogeneradores por ondas la velocidad de arranque del motor es de 11 km/h y su generacion maxima llega hastas los 108-126 km/h
+La estructura del aerogenerador sin aspas puede soportar velocidades de hasta 180-200

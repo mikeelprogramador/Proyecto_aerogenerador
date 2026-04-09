@@ -10,6 +10,10 @@ class Operations:
     __Tk = 273.15 # Grados kelvin
     __Ee = 0.8  #   eficiencia d generador eléctrico y sistemas mecanico
     
+    
+    def setCp(self, coeficiente):
+        self.__Cp = coeficiente 
+    
     #   densidad del aire segun la temperatura
     def __densidadAire(self,temperatura):
         temperatura += self.__Tk
@@ -22,16 +26,22 @@ class Operations:
     def __area(self):
         return round(float(np.pi * (self.__radio**2 ) ),2)
     
-    
+    def __aeraCilindro(self):
+        diametro = 0.15 
+        altura = 3
+        return altura * diametro
     
     #  calcula la potenciad el veinto y la potcia de las turbinas
-    def PotenciTurbina(self,velocidadV,temperatura):
+    def PotenciTurbina(self,velocidadV,temperatura, flag = None):
         velocidadV = round(float(velocidadV / 3.6 ),2)   #   comvertir la velocidad de km/h a m/s
         
         densidad = self.__densidadAire(temperatura)
         
-        area = self.__area()
-        
+        if flag == "cilindro":
+            area = self.__aeraCilindro()
+        else:
+            area = self.__area()
+            
         Pv = round(float(0.5 * densidad * area *(velocidadV**3 ) ),2) # Potencia del viento
         Pt = round(float( self.__Cp * Pv ),2) #   Potencia de la turbina
         
@@ -56,8 +66,20 @@ class Operations:
         tiempoFinal = time.perf_counter()   #   conteo final del intervalo del tiempo
         
         energia_j = potencia_electrica * (tiempoFinal - tiempoInicial ) #   energia genera en joules(J) ó J/s
-        energia_kwj = round(float(energia_j / 3600000 ),2)   #   energia generada en kilowatt/hora (kwh)
+        energia_kwj = energia_j / 3600000  #   energia generada en kilowatt/hora (kwh)
         
         return  energia_kwj
     
+    def vibracion_ondas(self, VelocidadV, tiempoIncial):
+        diametro = 0.15
+        amplitud = (0.1 + 0.02 * VelocidadV) * diametro
+        frecuencia = (0.2 * VelocidadV) /  diametro
+        
+        tiempoFinal = time.perf_counter()
+        deltaTiempo = tiempoFinal - tiempoIncial
+
+        x = amplitud * np.sin(2 * np.pi * frecuencia * deltaTiempo)
+        
+        print(x)
+        return x 
     

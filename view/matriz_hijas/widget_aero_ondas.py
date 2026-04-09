@@ -2,10 +2,9 @@ from tkinter import *
 from tkinter import ttk
 from PIL import Image,ImageTk
 from controls.aniamciones import Animations
-from controls.animacion_ondas import anguloGiro, velocidades
+from controls.animacion_ondas import movimiento_vibracion
 
 control = Animations()
-control.velocidades_motor(velocidades())
 
 class Programa_aero_ondas:
     def __init__(self, matrizPadre):
@@ -26,10 +25,10 @@ class Programa_aero_ondas:
         
         #   inicialisar imagen y tamaño
         self.imgfondo = Image.open("img/fondo.png").resize((942,1064))
-        self.imgTorre = Image.open("img/torre_horizontal.png").resize((1342,1364))
+        self.imgTorre = Image.open("img/aero_sinAspas_torre.png").resize((408,612))
         self.imgCorrienteAire_e = Image.open("img/corriente-aire-e.png").resize((586,400))
         self.imgCorrienteAire_w = Image.open("img/corriente-aire-w.png").resize((586,400))
-        self.imgAspas = Image.open("img/aspas_horizontales.png").resize((621,932))
+        self.imgAspas = Image.open("img/aero_sinAspas_cilindro_movimiento.png").resize((408,612))
 
         
         #   cargar la imagne con PIL y Tk
@@ -42,9 +41,9 @@ class Programa_aero_ondas:
         #   mostrar la imagen una sola vez en canvas 
         self.img_id_fondo = self.canvas.create_image(450, 500, image=self.imgTk_fondo, anchor="center")
         self.img_id_torre = self.canvas.create_image(500, 500, image=self.imgTk_torre)
-        self.img_id_corrienteAire_e = self.canvas.create_image(0, 300, image=self.imgTk_corrienteAire_e)
+        self.img_id_corrienteAire_e = self.canvas.create_image(-200, 300, image=self.imgTk_corrienteAire_e)
         self.img_id_corrienteAire_w = self.canvas.create_image(1100, 300, image=self.imgTk_corrienteAire_w)
-        self.img_id_aspas = self.canvas.create_image(498, 260, image=self.imgTk_aspas, anchor="center")
+        self.img_id_aspas = self.canvas.create_image(500, 368, image=self.imgTk_aspas, anchor="center")
         
         #   estado de la imagen
         self.canvas.itemconfig(self.img_id_corrienteAire_e, state="hidden")
@@ -62,7 +61,7 @@ class Programa_aero_ondas:
         """
         
         #    animacion muestra la energia generada
-        control.electricidad(self.text_energia)
+        control.electricidad(self.text_energia, "ondas")
         
         #    animacion cambia de color segun  la energia generada
         control.cambio_color(self.caja_color)
@@ -76,29 +75,21 @@ class Programa_aero_ondas:
         
         
     def __animacion_aspas(self):
-        """_resumen_
-        Esta función obtiene la velocidad angular y realiza la “animación /rotación” 
-        de las aspas actualizando cada frame
-        """
         #   milisegundos
         ms = 33 
         
-        #////////////////////
-        # LA FUNCION anguloGiro ya no existe se rempazo
-        #///////////////////
-        velocidadAngular = anguloGiro(control.direction_viento(), control.velocidadViento)
+        x_actual_w, y_actual_w = self.canvas.coords(self.img_id_aspas)
 
-        #   tiempo entre frame
-        dt = ms / 1000  
+        movimiento_x  = movimiento_vibracion(control.velocidadViento)
+
+        escala = 10
+        x_pix = movimiento_x * escala
         
-        self.giro += velocidadAngular * dt
-        
-        #   rotacion de la imagen
-        rotacionImg = self.imgAspas.rotate(self.giro, expand=TRUE)
-        self.imgTk_aspas = ImageTk.PhotoImage(rotacionImg)
-        
-        #   actualizar imagen
-        self.canvas.itemconfig(self.img_id_aspas, image=self.imgTk_aspas)
+        """Colocar limite para el movimiento"""
+          
+
+        # mover imagen 
+        self.canvas.coords(self.img_id_aspas, x_actual_w + x_pix, y_actual_w)
         
         
         self.canvas.after(ms, self.__animacion_aspas)
@@ -115,7 +106,7 @@ class Programa_aero_ondas:
         self.viento.place(relx=0.02, rely=0.1)
         
         #   valor/scalar del aire
-        self.variableAire = ttk.Scale(self.frame, from_=0, to=120, orient="horizontal", 
+        self.variableAire = ttk.Scale(self.frame, from_=0, to=220, orient="horizontal", 
                                        command= lambda valor: control.mostrarScalar("km/h",self.viento, valor))
         self.variableAire.place(relx=0.02, rely=0.2)
         
@@ -151,7 +142,7 @@ class Programa_aero_ondas:
         
         
     def __styleVentana(self):
-        self.ventana.title("Simulador Aerogenerador Vibracion")
+        self.ventana.title("Simulador Aerogenerador Vortex Bladeless sin aspas")
         self.ventana.geometry("1200x720")
         self.ventana.resizable(False,False) #   Desabilita el agrandamienro de la pantalla
         control.get_windows(self.ventana)
