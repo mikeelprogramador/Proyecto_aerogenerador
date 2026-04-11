@@ -71,7 +71,7 @@ def electricidad_horizontal (energia_total, speed_viento ,temperatura, direccion
                 #////////////////////////////////////////////////
                 energia_total -= (energia_total * 0.03)
                 
-            elif energia_total < 0.1:
+            if energia_total < 0.1:
                 energia_total = 0
                 
     #  disminuye la energia total si la dirrecion del viento va hacia la derecha           

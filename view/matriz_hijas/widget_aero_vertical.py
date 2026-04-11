@@ -25,11 +25,11 @@ class Programa_aero_vertical:
         control.get_canvas(self.canvas)
         
         #   inicialisar imagen y tamaño
-        self.imgfondo = Image.open("img/fondo_oceano.png").resize((942,1064))
-        self.imgTorre = Image.open("img/aero_vertical_torre.png").resize((650,650))
+        self.imgfondo = Image.open("img/fondo_oceano_anocheser.png").resize((1064,1064))
+        self.imgTorre = Image.open("img/aero_vertical_torre.png").resize((500,500))
         self.imgCorrienteAire_e = Image.open("img/corriente-aire-e.png").resize((586,400))
         self.imgCorrienteAire_w = Image.open("img/corriente-aire-w.png").resize((586,400))
-        self.imgAspas = Image.open("img/aero_vertical_aspas.png").resize((400,400))
+        self.imgAspas = Image.open("img/aero_vertical_aspas.png").resize((380,380))
 
         
         #   cargar la imagne con PIL y Tk
@@ -41,17 +41,17 @@ class Programa_aero_vertical:
  
         #   mostrar la imagen en el lienso
         self.img_id_fondo = self.canvas.create_image(450, 500, image=self.imgTk_fondo, anchor="center")
-        self.img_id_torre = self.canvas.create_image(500, 500, image=self.imgTk_torre)
+        self.img_id_torre = self.canvas.create_image(480, 450, image=self.imgTk_torre)
         self.img_id_corrienteAire_e = self.canvas.create_image(-200, 300, image=self.imgTk_corrienteAire_e)
         self.img_id_corrienteAire_w = self.canvas.create_image(1100, 300, image=self.imgTk_corrienteAire_w)
-        self.img_id_aspas = self.canvas.create_image(500, 370, image=self.imgTk_aspas, anchor="center")
+        self.img_id_aspas = self.canvas.create_image(485, 335, image=self.imgTk_aspas, anchor="center")
         
         #   estado de la imagen
         self.canvas.itemconfig(self.img_id_corrienteAire_e, state="hidden")
         self.canvas.itemconfig(self.img_id_corrienteAire_w, state="hidden")
         
         #   textos
-        self.text_energia = self.canvas.create_text(170,50, text="Energia generada: 0.0 kwh", font=("Arial", 18))
+        self.text_energia = self.canvas.create_text(170,50, text="Energia generada: 0.0 kwh", font=("Arial", 18), fill=("white"))
         
         #   rectangulo
         self.caja_color = self.canvas.create_rectangle(650, 30, 850, 70, fill="white")

@@ -24,7 +24,7 @@ class Programa_aero_ondas:
         control.get_canvas(self.canvas)
         
         #   inicialisar imagen y tamaño
-        self.imgfondo = Image.open("img/fondo_desierto.png").resize((942,1064))
+        self.imgfondo = Image.open("img/fondo_desierto.png").resize((1064,1064))
         self.imgTorre = Image.open("img/aero_sinAspas_torre.png").resize((408,570))
         self.imgCorrienteAire_e = Image.open("img/corriente-aire-e.png").resize((586,400))
         self.imgCorrienteAire_w = Image.open("img/corriente-aire-w.png").resize((586,400))
@@ -89,7 +89,7 @@ class Programa_aero_ondas:
         # mover imagen 
         self.canvas.coords(self.img_id_aspas, x_actual + x_pix, y_actual)
         
-        """Colocar limite para el movimiento"""
+        # limites para el movimiento
         self.limite_animacion()
         
         self.canvas.after(ms, self.__animacion_aspas)

@@ -54,7 +54,7 @@ def electricidad_vertical (energia_total, speed_viento ,temperatura, tiempo_inic
             #////////////////////////////////////////////////
             energia_total -= (energia_total * 0.03)
             
-        elif energia_total < 0.1:
+        if energia_total < 0.1:
             energia_total = 0
          
     return energia_total
@@ -63,5 +63,5 @@ def electricidad_vertical (energia_total, speed_viento ,temperatura, tiempo_inic
 #   velocidades para los motores
 def velocidades():
     velocidad_maxima = 90
-    velocidad_minima = 40
+    velocidad_minima = 36
     return velocidad_maxima, velocidad_minima

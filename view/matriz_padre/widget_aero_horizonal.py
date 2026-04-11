@@ -26,7 +26,7 @@ class Programa_aero_horizontal:
         control.get_canvas(self.canvas)
         
         #   inicialisar imagen y tamaño
-        self.imgfondo = Image.open("img/fondo.png").resize((942,1064))
+        self.imgfondo = Image.open("img/fondo.png").resize((1064,1064))
         self.imgTorre = Image.open("img/torre_horizontal.png").resize((1342,1364))
         self.imgCorrienteAire_e = Image.open("img/corriente-aire-e.png").resize((586,400))
         self.imgCorrienteAire_w = Image.open("img/corriente-aire-w.png").resize((586,400))
