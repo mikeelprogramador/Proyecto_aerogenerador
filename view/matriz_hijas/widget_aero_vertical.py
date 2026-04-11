@@ -83,22 +83,18 @@ class Programa_aero_vertical:
         #   milisegundos
         ms = 33 
         
-        velocidadAngular = anguloGiro(control.velocidadViento)
+        self.velocidadAngular = anguloGiro(control.velocidadViento)
 
         #   tiempo entre frame
         dt = ms / 1000  
         
-        self.giro += velocidadAngular * dt
-        
-        
-        #   rotacion de la imagen
+        self.giro += self.velocidadAngular * dt
 
         filtro_giro = self.giro % ( 2 * np.pi)
         
         escala = abs(np.cos(filtro_giro))
         
         nuevo_ancho = int(self.imgAspas.width * escala )
-        
     
         img_transformada = self.imgAspas.resize((max(1, nuevo_ancho), self.imgAspas.height))
         
@@ -157,9 +153,9 @@ class Programa_aero_vertical:
         self.derecha.place(relx=0.035, rely=0.8)
         
     
-    def reset(self):
-        pass
-        
+    def reinico(self):
+        self.variableAire.set(0)
+        control.energia_total = 0
         
     def __styleVentana(self):
         self.ventana.title("Simulador Aerogerador Vertical Darrieus")

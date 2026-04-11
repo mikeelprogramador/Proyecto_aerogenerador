@@ -154,6 +154,9 @@ class Programa_aero_ondas:
         self.derecha.place(relx=0.035, rely=0.8)
         
         
+    def reinico(self):
+        self.variableAire.set(0)
+        control.energia_total = 0
         
     def __styleVentana(self):
         self.ventana.title("Simulador Aerogenerador Vortex Bladeless sin aspas")

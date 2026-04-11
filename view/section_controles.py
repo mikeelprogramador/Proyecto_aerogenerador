@@ -34,7 +34,8 @@ def window_hijas(flag, matrizPadre):
         def cerrar():
             global state_window
             state_window = False
-            ventana_hija.destroy()   #   destruye la venta 
+            matriz_hija.reinico()
+            ventana_hija.destroy()   #   destruye la venta
         
         ventana_hija.protocol("WM_DELETE_WINDOW", cerrar)    #   protocolo que se ejecuta antes de cerrar la ventana
         
@@ -60,6 +61,7 @@ def window_hijas(flag, matrizPadre):
         def cerrar():
             global state_window
             state_window = False
+            matriz_hija.reinico()
             ventana_hija.destroy()   #   destruye la venta
         
         ventana_hija.protocol("WM_DELETE_WINDOW", cerrar)     #   protocolo que se ejecuta antes de cerrar la ventana
