@@ -9,6 +9,7 @@ control = Animations()
 
 class Programa_aero_vertical:
     def __init__(self, matrizPadre):
+        self.flag = False
         self.ventana = Toplevel(matrizPadre)    #   matriz hija
         self.frame = ttk.Frame(self.ventana)
         self.frame.place(x=0, y=0, relwidth=1, relheight=1)#ajuste del frame para los lados x & y, ocupando el 100% de la pantalla
@@ -83,27 +84,37 @@ class Programa_aero_vertical:
         #   milisegundos
         ms = 33 
         
-        self.velocidadAngular = anguloGiro(control.velocidadViento)
+        dato = self.variableAire.get()
+        
+        if dato > 0 and not self.flag:
+            self.flag = True
+            
+        #   filtro  del reinico para la animacion
+        if self.flag:
+            self.velocidadAngular = anguloGiro(control.velocidadViento)
 
-        #   tiempo entre frame
-        dt = ms / 1000  
-        
-        self.giro += self.velocidadAngular * dt
+            #   tiempo entre frame
+            dt = ms / 1000  
+            
+            self.giro += self.velocidadAngular * dt
 
-        filtro_giro = self.giro % ( 2 * np.pi)
+            filtro_giro = self.giro % ( 2 * np.pi)
+            
+            escala = abs(np.cos(filtro_giro))
+            
+            nuevo_ancho = int(self.imgAspas.width * escala )
         
-        escala = abs(np.cos(filtro_giro))
-        
-        nuevo_ancho = int(self.imgAspas.width * escala )
-    
-        img_transformada = self.imgAspas.resize((max(1, nuevo_ancho), self.imgAspas.height))
-        
+            img_transformada = self.imgAspas.resize((max(1, nuevo_ancho), self.imgAspas.height))
+            
 
-        self.imgTk_aspas = ImageTk.PhotoImage(img_transformada)
-        
-        #   actualizar imagen
-        self.canvas.itemconfig(self.img_id_aspas, image=self.imgTk_aspas)
-        
+            self.imgTk_aspas = ImageTk.PhotoImage(img_transformada)
+            
+            #   actualizar imagen
+            self.canvas.itemconfig(self.img_id_aspas, image=self.imgTk_aspas)
+            
+        else:
+            self.canvas.coords(self.img_id_aspas, 485, 335)    
+
         
         self.canvas.after(ms, self.__animacion_aspas)
         
@@ -155,6 +166,7 @@ class Programa_aero_vertical:
     
     def reinico(self):
         self.variableAire.set(0)
+        self.flag = False
         control.energia_total = 0
         
     def __styleVentana(self):
