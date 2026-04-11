@@ -25,11 +25,11 @@ class Programa_aero_vertical:
         control.get_canvas(self.canvas)
         
         #   inicialisar imagen y tamaño
-        self.imgfondo = Image.open("img/fondo.png").resize((942,1064))
-        self.imgTorre = Image.open("img/aero_vertical_torre.png").resize((942,1064))
+        self.imgfondo = Image.open("img/fondo_oceano.png").resize((942,1064))
+        self.imgTorre = Image.open("img/aero_vertical_torre.png").resize((650,650))
         self.imgCorrienteAire_e = Image.open("img/corriente-aire-e.png").resize((586,400))
         self.imgCorrienteAire_w = Image.open("img/corriente-aire-w.png").resize((586,400))
-        self.imgAspas = Image.open("img/aero_vertical_aspas.png").resize((500,500))
+        self.imgAspas = Image.open("img/aero_vertical_aspas.png").resize((400,400))
 
         
         #   cargar la imagne con PIL y Tk
@@ -44,7 +44,7 @@ class Programa_aero_vertical:
         self.img_id_torre = self.canvas.create_image(500, 500, image=self.imgTk_torre)
         self.img_id_corrienteAire_e = self.canvas.create_image(-200, 300, image=self.imgTk_corrienteAire_e)
         self.img_id_corrienteAire_w = self.canvas.create_image(1100, 300, image=self.imgTk_corrienteAire_w)
-        self.img_id_aspas = self.canvas.create_image(498, 260, image=self.imgTk_aspas, anchor="center")
+        self.img_id_aspas = self.canvas.create_image(500, 370, image=self.imgTk_aspas, anchor="center")
         
         #   estado de la imagen
         self.canvas.itemconfig(self.img_id_corrienteAire_e, state="hidden")

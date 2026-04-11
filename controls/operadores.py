@@ -26,6 +26,7 @@ class Operations:
     def __area(self):
         return round(float(np.pi * (self.__radio**2 ) ),2)
     
+    
     def __aeraCilindro(self):
         diametro = 0.15 
         altura = 3
@@ -80,6 +81,6 @@ class Operations:
 
         x = amplitud * np.sin(2 * np.pi * frecuencia * deltaTiempo)
         
-        print(x)
+        #print(x)
         return x 
     

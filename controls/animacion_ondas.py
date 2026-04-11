@@ -52,7 +52,7 @@ def electricidad_ondas (energia_total, speed_viento ,temperatura, tiempo_inical)
             #////////////////////////////////////////////////
             energia_total -= (energia_total * 0.03)
             
-        elif energia_total < 0.1:
+        if energia_total < 0.01:
             energia_total = 0
                 
       

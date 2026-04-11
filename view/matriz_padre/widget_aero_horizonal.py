@@ -143,7 +143,7 @@ class Programa_aero_horizontal:
         self.izquierda.place(relx=0.035, rely=0.75)
         
         #   lectura de dirracion mediante un boton
-        self.derecha = ttk.Button(self.frame, text="derecha", command= lambda: control.cambio_direccion("w", True))
+        self.derecha = ttk.Button(self.frame, text="derecha", command= lambda: control.cambio_direccion("w"))
         self.derecha.place(relx=0.035, rely=0.8)
         
         

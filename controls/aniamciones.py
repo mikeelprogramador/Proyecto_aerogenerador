@@ -29,13 +29,9 @@ class Animations:
             
       
     #   lectura de la direccion del aire
-    def cambio_direccion(self, direccion, flag = False):
+    def cambio_direccion(self, direccion):
         self.__Dv = direccion
-        if self.__Dv == "w" and flag :
-            self.activate = True
-        else:
-            self.activate = False
-        
+
     def direction_viento(self):
         return self.__Dv
     

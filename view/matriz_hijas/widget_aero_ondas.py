@@ -24,11 +24,11 @@ class Programa_aero_ondas:
         control.get_canvas(self.canvas)
         
         #   inicialisar imagen y tamaño
-        self.imgfondo = Image.open("img/fondo.png").resize((942,1064))
-        self.imgTorre = Image.open("img/aero_sinAspas_torre.png").resize((408,612))
+        self.imgfondo = Image.open("img/fondo_desierto.png").resize((942,1064))
+        self.imgTorre = Image.open("img/aero_sinAspas_torre.png").resize((408,570))
         self.imgCorrienteAire_e = Image.open("img/corriente-aire-e.png").resize((586,400))
         self.imgCorrienteAire_w = Image.open("img/corriente-aire-w.png").resize((586,400))
-        self.imgAspas = Image.open("img/aero_sinAspas_cilindro_movimiento.png").resize((408,612))
+        self.imgAspas = Image.open("img/aero_sinAspas_cilindro_movimiento.png").resize((416,612))
 
         
         #   cargar la imagne con PIL y Tk
@@ -78,21 +78,35 @@ class Programa_aero_ondas:
         #   milisegundos
         ms = 33 
         
-        x_actual_w, y_actual_w = self.canvas.coords(self.img_id_aspas)
+        x_actual, y_actual= self.canvas.coords(self.img_id_aspas)
 
         movimiento_x  = movimiento_vibracion(control.velocidadViento)
 
-        escala = 10
+        escala = 8
         x_pix = movimiento_x * escala
         
-        """Colocar limite para el movimiento"""
-          
 
         # mover imagen 
-        self.canvas.coords(self.img_id_aspas, x_actual_w + x_pix, y_actual_w)
+        self.canvas.coords(self.img_id_aspas, x_actual + x_pix, y_actual)
         
+        """Colocar limite para el movimiento"""
+        self.limite_animacion()
         
         self.canvas.after(ms, self.__animacion_aspas)
+        
+        
+    def limite_animacion(self):
+        
+        x_actual, y_actual= self.canvas.coords(self.img_id_aspas)
+        
+        if x_actual >= 502:
+            x_nuevo = 500
+            self.canvas.coords(self.img_id_aspas, x_nuevo, y_actual)
+            
+        if x_actual <= 498:
+            x_nuevo = 500
+            self.canvas.coords(self.img_id_aspas, x_nuevo, y_actual)
+        
         
         
     def __variablesPrograma(self):
