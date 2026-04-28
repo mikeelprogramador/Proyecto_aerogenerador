@@ -1,4 +1,5 @@
 from controls.operadores import Operations
+from controls.tex import textos
 import time
 
 op = Operations() # instancia de las operacione
@@ -12,7 +13,7 @@ class Animations:
         self.temperatura = 0    #  variable predeterminada de la temperatura
         self.energia_total = 0    #  variable predeterminada de la energia total
         self.estado_color = ""  #   varible para cambiar el fondo
-        self.tiempoInical = 0   
+        self.tiempoInical = 0
     
     def mostrarScalar(self, flag, etiqueta, valor):
         
@@ -74,57 +75,84 @@ class Animations:
         self.ventana.after(ms, self.electricidad, etiqueta,flag)
                 
        
-                
-        
-                
-    def cambio_color(self, etiqueta):
-        
-        """_resumen_
-        Modificador de color, teniendo en cuanta la energía total generada
-        """
+       
+    def text_animation(self, etiqueta):
         
         ms = 200
             
         
-        if self.energia_total > 1 and self.energia_total <= 10:
-            self.canvas.itemconfig(etiqueta, fill="red")
+        if self.energia_total > 0.1 and self.energia_total <= 0.5:
+            self.canvas.itemconfig(etiqueta, text=textos(1))
+            self.canvas.coords(etiqueta, 690, 85)
         
-        elif self.energia_total > 10 and self.energia_total <= 30:
-            self.canvas.itemconfig(etiqueta, fill="yellow")
+        elif self.energia_total > 0.5 and self.energia_total <= 1:
+            self.canvas.itemconfig(etiqueta, text=textos(2))
+            self.canvas.coords(etiqueta, 640, 100)
             
-        elif self.energia_total > 30 and self.energia_total <= 60:
-            self.canvas.itemconfig(etiqueta, fill="green")
+        elif self.energia_total > 1 and self.energia_total <= 5:
+            self.canvas.itemconfig(etiqueta, text=textos(3))
             
-        elif self.energia_total > 60 :
-            self.canvas.itemconfig(etiqueta, fill="blue")
+        elif self.energia_total > 5 and self.energia_total <= 10:
+            self.canvas.itemconfig(etiqueta, text=textos(4))
+            
+        elif self.energia_total > 10 and self.energia_total <= 20:
+            self.canvas.itemconfig(etiqueta, text=textos(5))
+            
+        elif self.energia_total > 20 and self.energia_total <= 50:
+            self.canvas.itemconfig(etiqueta, text=textos(6))
+            
+        elif self.energia_total > 50 and self.energia_total <= 100:
+            self.canvas.itemconfig(etiqueta, text=textos(7))
+            
+        elif self.energia_total > 100 :
+            self.canvas.itemconfig(etiqueta, text=textos(8))
             
         elif self.energia_total < 1 :
-            self.canvas.itemconfig(etiqueta, fill="white")
+            self.canvas.itemconfig(etiqueta, text=textos(0))
+            self.canvas.coords(etiqueta, 700, 70)
             
-        self.ventana.after(ms, self.cambio_color, etiqueta)
+        self.ventana.after(ms, self.text_animation, etiqueta)
+                
+        
+                
+    # def cambio_color(self, etiqueta):
+        
+    #     """_resumen_
+    #     Modificador de color, teniendo en cuanta la energía total generada
+    #     """
+        
+    #     ms = 200
+            
+        
+    #     if self.energia_total > 1 and self.energia_total <= 10:
+    #         self.canvas.itemconfig(etiqueta, fill="red")
+        
+    #     elif self.energia_total > 10 and self.energia_total <= 30:
+    #         self.canvas.itemconfig(etiqueta, fill="yellow")
+            
+    #     elif self.energia_total > 30 and self.energia_total <= 60:
+    #         self.canvas.itemconfig(etiqueta, fill="green")
+            
+    #     elif self.energia_total > 60 :
+    #         self.canvas.itemconfig(etiqueta, fill="blue")
+            
+    #     elif self.energia_total < 1 :
+    #         self.canvas.itemconfig(etiqueta, fill="white")
+            
+    #     self.ventana.after(ms, self.cambio_color, etiqueta)
        
                 
                 
                 
     def animacion_movimiento_aire(self, etiqueta_e, etiqueta_w ):
         
-        #/////////////////////////////////////////
-        #   "calculo matematico" 
-        #   para la velocidad del movimiento del aire
-        #////////////////////////////////////////
-        #   sacando la longitud del viento
-        # v = int(self.velocidadViento)
-        # v = len(str(v))
-        
-        #   calculando el tiempo segun la velocidad del aire
-        #ms = int(self.velocidadViento ) / 100**int(v)
+        #velocidad_animacion = self.velocidadViento * 0.5
+        velocidad_animacion = 10
         
         ms = 33
         
-        
-        
-        velocidad_e = 10    #   movimiento en pixeles cuando el viento va hacia la izquierda
-        velocidad_w = -10   #   movimiento en pixeles cuando el viento va hacia la derecha
+        velocidad_e = velocidad_animacion    #   movimiento en pixeles cuando el viento va hacia la izquierda
+        velocidad_w = -velocidad_animacion   #   movimiento en pixeles cuando el viento va hacia la derecha
         
             
         #   guardamos posicon x & y de la aniamcion
@@ -194,7 +222,3 @@ class Animations:
                
         self.ventana.after(ms, self.animacion_movimiento_aire, etiqueta_e, etiqueta_w)
                     
-                
-                    
-             
-                

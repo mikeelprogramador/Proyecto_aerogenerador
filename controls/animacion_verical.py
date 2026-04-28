@@ -63,5 +63,5 @@ def electricidad_vertical (energia_total, speed_viento ,temperatura, tiempo_inic
 #   velocidades para los motores
 def velocidades():
     velocidad_maxima = 90
-    velocidad_minima = 36
+    velocidad_minima = 25
     return velocidad_maxima, velocidad_minima

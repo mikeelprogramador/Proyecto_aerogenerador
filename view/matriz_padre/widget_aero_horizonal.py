@@ -53,9 +53,10 @@ class Programa_aero_horizontal:
         
         #   textos
         self.text_energia = self.canvas.create_text(170,50, text="Energia generada: 0.0 kwh", font=("Arial", 18))
+        self.energia_cotidiana = self.canvas.create_text(700,70, text="Energia nula o muy baja", font=("Arial", 18))
         
         #   rectangulo
-        self.caja_color = self.canvas.create_rectangle(650, 30, 850, 70, fill="white")
+        # self.caja_color = self.canvas.create_rectangle(650, 30, 850, 70, fill="white")
     
     
         """_resumen_
@@ -65,8 +66,11 @@ class Programa_aero_horizontal:
         #    animacion muestra la energia generada
         control.electricidad(self.text_energia, "horizontal")
         
+        #   animacion cambio del texto segun la energiia
+        control.text_animation(self.energia_cotidiana)
+        
         #    animacion cambia de color segun  la energia generada
-        control.cambio_color(self.caja_color)
+        # control.cambio_color(self.caja_color)
         
         #    animacion movimiento del aire
         control.animacion_movimiento_aire(self.img_id_corrienteAire_e, self.img_id_corrienteAire_w)
