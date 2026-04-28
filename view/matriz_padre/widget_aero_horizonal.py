@@ -1,7 +1,7 @@
 from tkinter import *
 from tkinter import ttk
 from PIL import Image,ImageTk
-from controls.aniamciones import Animations
+from controls.animaciones import Animations
 from controls.animacion_horizo import anguloGiro
 from view.section_controles import window_hijas
 

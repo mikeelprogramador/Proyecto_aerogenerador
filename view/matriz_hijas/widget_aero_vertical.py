@@ -2,7 +2,7 @@ from tkinter import *
 from tkinter import ttk
 from PIL import Image,ImageTk
 import numpy as np
-from controls.aniamciones import Animations
+from controls.animaciones import Animations
 from controls.animacion_verical import anguloGiro
 
 control = Animations()
@@ -64,7 +64,7 @@ class Programa_aero_vertical:
         """
         
         #    animacion muestra la energia generada
-        control.electricidad(self.text_energia, "horizontal")
+        control.electricidad(self.text_energia, "vertical")
         
         #   animacion cambio del texto segun la energiia
         control.text_animation(self.energia_cotidiana)

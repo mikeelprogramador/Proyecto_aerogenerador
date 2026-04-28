@@ -1,7 +1,7 @@
 from tkinter import *
 from tkinter import ttk
 from PIL import Image,ImageTk
-from controls.aniamciones import Animations
+from controls.animaciones import Animations
 from controls.animacion_ondas import movimiento_vibracion
 
 control = Animations()
@@ -62,7 +62,7 @@ class Programa_aero_ondas:
         """
         
         #    animacion muestra la energia generada
-        control.electricidad(self.text_energia, "horizontal")
+        control.electricidad(self.text_energia, "ondas")
         
         #   animacion cambio del texto segun la energiia
         control.text_animation(self.energia_cotidiana)
