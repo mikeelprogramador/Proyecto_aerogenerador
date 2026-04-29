@@ -1,0 +1,38 @@
+Para inicial el programa debes primero tener instaladas las siguientes librerias
+• pillow
+• numpy
+
+Seguidamente ejecutas el archivio main.py
+
+IMPORTANTE!!!
+
+Ten en cuenta que los motores como las aspas de los aerogeneradores tiene un limite de supervicencia, o una velocidad maxima y minima.
+
+Aerogenerador Horizontal:
+El motor y las aspas cuenta con:
+velocidad maxima: 100 km/h
+velocidad minima: 20 km/h
+
+-------------------------------------------------------------------------------------------------------------------------------------
+
+Aerogenerador Vertical:
+El motoro y las aspas cuenta con la misma velocidad minima de:
+velocidad minima: 25 km/h
+
+El motor soporta una velociidad maxima de:
+velocidad maxima: 90 km/h
+
+Las aspas soportan una velocidad maxima de:
+velocidad maxima: 100 km/h
+
+-------------------------------------------------------------------------------------------------------------------------------------
+
+Aerogenerador ondas:
+El motoro y las aspas cuenta con la misma velocidad minima de:
+velocidad minima: 11 km/h
+
+El motor soporta una velociidad maxima de:
+velocidad maxima: 120 km/h
+
+Las aspas soportan una velocidad maxima de:
+velocidad maxima: 200 km/h
