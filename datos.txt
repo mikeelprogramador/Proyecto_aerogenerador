@@ -1,6 +1,7 @@
 Para inicial el programa debes primero tener instaladas las siguientes librerias
 • pillow
 • numpy
+• matplorlib
 
 Seguidamente ejecutas el archivio main.py
 

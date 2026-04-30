@@ -3,8 +3,7 @@ from tkinter import ttk
 from PIL import Image,ImageTk
 from controls.animaciones import Animations
 from controls.animacion_ondas import movimiento_vibracion
-from grafica_multivariable import mostrar_grafica
-from controls.animaciones import Animations
+from grafica_multivariable import grafica
 
 control = Animations()
 
@@ -18,15 +17,37 @@ class Programa_aero_ondas:
         self.giro = 0   #   angulo de giro
         self.__lienso()
 
-    def abrir_grafica(self):
+    #----------------------------------------------------------------------------------------------
+    
+        """_resumen_
+        apartado para las graficas
+        """
+        
+    def abrir_grafica(self): 
+        self.graf = grafica(self.ventana)
+        self.mostrar_grafica()
+    
+
+            
+    def mostrar_grafica(self):
+        ms = 3300
+        
         try:
+
             velocidad = control.velocidadViento
             radio = 2
-
-            mostrar_grafica(velocidad, radio)
+            self.graf.datos_grafica(velocidad, radio)
 
         except Exception as e:
             print("Error:", e)
+            
+            
+        self.after_graf = self.ventana.after(ms, self.mostrar_grafica)
+        
+        self.graf.save_live(self.after_graf,self.canvas)
+            
+            
+    #----------------------------------------------------------------------------------------------
         
     def __lienso(self):
         #   creando en lienso o canvas
