@@ -5,6 +5,7 @@ from controls.animaciones import Animations
 from controls.animacion_horizo import anguloGiro
 from view.section_controles import window_hijas
 from grafica_multivariable import grafica
+import os
 
 control = Animations()
 
@@ -19,15 +20,22 @@ class Programa_aero_horizontal:
         self.giro = 0   #   angulo de giro
         self.__lienso()
         
+        def cerrar():
+            self.ventana.quit()
+            self.ventana.destroy()
+
+        self.ventana.protocol("WM_DELETE_WINDOW", cerrar)     #   protocolo que se ejecuta antes de cerrar la ventana
+        
     #----------------------------------------------------------------------------------------------
     
         """_resumen_
         apartado para las graficas
         """
         
-    def abrir_grafica(self): 
-        self.graf = grafica(self.ventana)
+    def abrir_grafica(self):
+        self.graf = grafica()
         self.mostrar_grafica()
+
     
 
             

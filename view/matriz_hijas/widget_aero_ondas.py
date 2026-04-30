@@ -24,7 +24,7 @@ class Programa_aero_ondas:
         """
         
     def abrir_grafica(self): 
-        self.graf = grafica(self.ventana)
+        self.graf = grafica()
         self.mostrar_grafica()
     
 

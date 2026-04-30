@@ -1,22 +1,19 @@
-import tkinter as tk
+from tkinter import *
 import numpy as np
 import matplotlib.pyplot as plt
-
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 
 class grafica:
 
-    def __init__(self, ventana_padre):
-        
-        self.dato_save_live = False
+    def __init__(self):
 
         # ventana hija
-        self.ventana = tk.Toplevel(ventana_padre)
+        self.ventana_hija = Tk()
         
-        self.ventana.title("Gráfica aerogenerador")
-        self.ventana.geometry("900x700")
-        self.ventana.resizable(False,False) #   Desabilita el agrandamienro de la pantalla
+        self.ventana_hija.title("Gráfica aerogenerador")
+        self.ventana_hija.geometry("700x500")
+        self.ventana_hija.resizable(False,False) #   Desabilita el agrandamienro de la pantalla
         
 
         self.iniciar_grafica()
@@ -32,7 +29,7 @@ class grafica:
         self.ax = self.fig.add_subplot(111, projection='3d')
 
         # integrar matplotlib en tkinter
-        self.canvas = FigureCanvasTkAgg(self.fig, master=self.ventana)
+        self.canvas = FigureCanvasTkAgg(self.fig, master=self.ventana_hija)
 
         self.canvas.draw()
 
@@ -82,14 +79,14 @@ class grafica:
         
         #   destruye la venta
         def cerrar():
+            self.ventana_hija.destroy()
             
             if etiqueta:
                 canvas.after_cancel(etiqueta)
-            self.ventana.destroy()
                 
-        
-        self.ventana.protocol("WM_DELETE_WINDOW", cerrar)     #   protocolo que se ejecuta antes de cerrar la ventana
-        self.ventana.wait_window()  # bloquo del código hasta el cierre de la ventana 
+
+        self.ventana_hija.protocol("WM_DELETE_WINDOW", cerrar)     #   protocolo que se ejecuta antes de cerrar la ventana
+        self.ventana_hija.wait_window()  # bloquo del código hasta el cierre de la ventana 
         
 
         
