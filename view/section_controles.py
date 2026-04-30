@@ -67,3 +67,5 @@ def window_hijas(flag, matrizPadre):
         ventana_hija.protocol("WM_DELETE_WINDOW", cerrar)     #   protocolo que se ejecuta antes de cerrar la ventana
         
         ventana_hija.wait_window()  # bloquo del código hasta el cierre de la ventana 
+        
+        

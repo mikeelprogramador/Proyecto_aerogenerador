@@ -3,6 +3,8 @@ from tkinter import ttk
 from PIL import Image,ImageTk
 from controls.animaciones import Animations
 from controls.animacion_ondas import movimiento_vibracion
+from grafica_multivariable import mostrar_grafica
+from controls.animaciones import Animations
 
 control = Animations()
 
@@ -16,6 +18,15 @@ class Programa_aero_ondas:
         self.giro = 0   #   angulo de giro
         self.__lienso()
 
+    def abrir_grafica(self):
+        try:
+            velocidad = control.velocidadViento
+            radio = 2
+
+            mostrar_grafica(velocidad, radio)
+
+        except Exception as e:
+            print("Error:", e)
         
     def __lienso(self):
         #   creando en lienso o canvas
@@ -156,6 +167,13 @@ class Programa_aero_ondas:
         #   lectura de dirracion mediante un boton
         self.derecha = ttk.Button(self.frame, text="derecha", command= lambda: control.cambio_direccion("w"))
         self.derecha.place(relx=0.035, rely=0.8)
+        
+        self.boton_grafica = ttk.Button(
+            self.frame,
+            text="Ver gráfica",
+            command=self.abrir_grafica)
+
+        self.boton_grafica.place(relx=0.02, rely=0.9)
         
         
     def reinico(self):

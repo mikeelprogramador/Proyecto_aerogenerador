@@ -4,6 +4,7 @@ from PIL import Image,ImageTk
 from controls.animaciones import Animations
 from controls.animacion_horizo import anguloGiro
 from view.section_controles import window_hijas
+from grafica_multivariable import mostrar_grafica
 
 control = Animations()
 
@@ -17,7 +18,15 @@ class Programa_aero_horizontal:
         self.giro = 0   #   angulo de giro
         self.__lienso()
         
+    def abrir_grafica(self):
+        try:
+            velocidad = control.velocidadViento
+            radio = 2
 
+            mostrar_grafica(velocidad, radio)
+
+        except Exception as e:
+            print("Error:", e)
         
     def __lienso(self):
         #   creando en lienso o canvas
@@ -163,6 +172,13 @@ class Programa_aero_horizontal:
         self.boton2 = ttk.Button(self.frame, text="Aerogenerador \n Vortex Bladeless \n sin aspas",
                                  command= lambda: window_hijas("ondas", self.ventana))
         self.boton2.place(relx=0.9, rely=0.3)
+
+        self.boton_grafica = ttk.Button(
+            self.frame,
+            text="Ver gráfica",
+            command=self.abrir_grafica)
+
+        self.boton_grafica.place(relx=0.02, rely=0.9)
         
         
     def __styleVentana(self):
